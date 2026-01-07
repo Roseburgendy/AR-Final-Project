@@ -12,6 +12,13 @@
 /[Uu]ser[Ss]ettings/
 *.log
 
+# Unity terrain & large textures
+*.tif
+*.psd
+
+# Vuforia / UPM cache
+Packages/*.tgz
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
