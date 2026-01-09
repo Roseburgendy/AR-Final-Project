@@ -1,26 +1,34 @@
-using System;
+ï»¿using System;
 using UnityEngine;
+
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 [RequireComponent(typeof(Collider))]
 public class ZYW_Draggable3D : MonoBehaviour
 {
     public string itemType; // "Apple" or "Fish"
-    public Action OnCorrectDropped;
 
-    [Header("Drag Settings")]
-    public Camera dragCamera;                 // ²»Ìî¾ÍÓÃ Camera.main
-    public LayerMask draggableRayMask = ~0;   // ÉäÏß¿ÉÃüÖĞµÄ²ã£¨Ä¬ÈÏÈ«²ã£©
-    public LayerMask dropZoneMask = ~0;       // DropZone ËùÔÚ²ã£¨½¨ÒéÉèÖÃ³É×¨ÓÃ²ã£©
-    public float dropSearchRadius = 0.20f;    // ËÉÊÖÊ±ÕÒ¿òµÄ°ë¾¶
+    // âœ… æ”¹æˆå¸¦ç±»å‹çš„å›è°ƒ
+    public Action<string> OnCollected;
+
+    [Header("Camera / Raycast")]
+    public Camera dragCamera;
+    public LayerMask draggableRayMask = ~0;
+
+    [Header("Tap To Collect")]
+    public bool enableTapToCollect = true;
+    public bool disableObjectOnCollect = true;
 
     private Rigidbody rb;
     private Collider col;
-
     private bool locked = false;
-    private bool dragging = false;
 
-    private Plane dragPlane;      // ÍÏ×§Æ½Ãæ
-    private float planeEnter = 0f;
+#if ENABLE_INPUT_SYSTEM
+    private bool pointerDownThisFrame;
+    private Vector2 pointerPos;
+#endif
 
     private void Awake()
     {
@@ -29,155 +37,74 @@ public class ZYW_Draggable3D : MonoBehaviour
 
         if (dragCamera == null) dragCamera = Camera.main;
 
-        // ½¨ÒéÓĞ Rigidbody ¸üÎÈ
-        if (rb != null) rb.isKinematic = true;
+        if (rb == null) rb = gameObject.AddComponent<Rigidbody>();
+        rb.isKinematic = true;
+        rb.useGravity = false;
     }
 
     private void Update()
     {
         if (locked) return;
+        if (!enableTapToCollect) return;
+
         if (dragCamera == null) dragCamera = Camera.main;
         if (dragCamera == null) return;
 
-        // Êó±ê/´¥ÃşÍ³Ò»´¦Àí
-        if (PointerDownThisObject())
-        {
-            BeginDrag();
-        }
+#if ENABLE_INPUT_SYSTEM
+        ReadPointer();
 
-        if (dragging)
+        if (pointerDownThisFrame && RayHitsThisOrChild(pointerPos))
         {
-            if (PointerHeld())
-            {
-                DragMove();
-            }
-            else
-            {
-                EndDrag();
-            }
+            Collect();
         }
+#endif
     }
 
-    private bool PointerDownThisObject()
+#if ENABLE_INPUT_SYSTEM
+    private void ReadPointer()
     {
-        // Mouse
-        if (Input.GetMouseButtonDown(0))
+        pointerDownThisFrame = false;
+
+        if (Mouse.current != null)
         {
-            return RayHitsThis(Input.mousePosition);
+            pointerDownThisFrame = Mouse.current.leftButton.wasPressedThisFrame;
+            pointerPos = Mouse.current.position.ReadValue();
+            return;
         }
 
-        // Touch
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        if (Touchscreen.current != null)
         {
-            return RayHitsThis(Input.GetTouch(0).position);
+            var t = Touchscreen.current.primaryTouch;
+            pointerDownThisFrame = t.press.wasPressedThisFrame;
+            pointerPos = t.position.ReadValue();
         }
-
-        return false;
     }
 
-    private bool PointerHeld()
-    {
-        if (Input.touchCount > 0)
-        {
-            var ph = Input.GetTouch(0).phase;
-            return ph == TouchPhase.Moved || ph == TouchPhase.Stationary;
-        }
-        return Input.GetMouseButton(0);
-    }
-
-    private Vector2 PointerPos()
-    {
-        if (Input.touchCount > 0) return Input.GetTouch(0).position;
-        return Input.mousePosition;
-    }
-
-    private bool RayHitsThis(Vector2 screenPos)
+    private bool RayHitsThisOrChild(Vector2 screenPos)
     {
         Ray ray = dragCamera.ScreenPointToRay(screenPos);
         if (Physics.Raycast(ray, out RaycastHit hit, 999f, draggableRayMask, QueryTriggerInteraction.Ignore))
         {
-            return hit.collider == col;
+            return hit.transform == transform || hit.transform.IsChildOf(transform);
         }
         return false;
     }
 
-    private void BeginDrag()
+    private void Collect()
     {
-        dragging = true;
-
-        // ¹Ì¶¨Éî¶ÈÍÏ×§£ºÍÏ×§Æ½Ãæ·¨Ïß = Ïà»ú forward£¬Æ½Ãæ¹ıÎïÌåµ±Ç°Î»ÖÃ
-        dragPlane = new Plane(dragCamera.transform.forward, transform.position);
-
-        // ÍÏ×§Ê±ÎªÁËÎÈ¶¨£º¿ÉÁÙÊ±¹Øµô collider µÄÒ»Ğ©½»»¥£¨²»Ç¿ÖÆ£©
-        if (rb != null) rb.isKinematic = true;
-    }
-
-    private void DragMove()
-    {
-        Ray ray = dragCamera.ScreenPointToRay(PointerPos());
-        if (dragPlane.Raycast(ray, out planeEnter))
-        {
-            Vector3 worldPos = ray.GetPoint(planeEnter);
-            transform.position = worldPos;
-        }
-    }
-
-    private void EndDrag()
-    {
-        dragging = false;
-
-        // ²éÕÒ¸½½ü DropZone
-        Collider[] near = Physics.OverlapSphere(transform.position, dropSearchRadius, dropZoneMask, QueryTriggerInteraction.Collide);
-
-        ZYW_DropZone3D bestZone = null;
-        float bestDist = float.MaxValue;
-
-        for (int i = 0; i < near.Length; i++)
-        {
-            var zone = near[i].GetComponentInParent<ZYW_DropZone3D>();
-            if (zone == null) continue;
-
-            float d = Vector3.Distance(transform.position, (zone.snapAnchor != null ? zone.snapAnchor.position : zone.transform.position));
-            if (d < bestDist)
-            {
-                bestDist = d;
-                bestZone = zone;
-            }
-        }
-
-        if (bestZone != null)
-        {
-            // Í¬Ê±Âú×ã£ºÀàĞÍÕıÈ· + Ã»±»Õ¼ÓÃ
-            bool accepted = bestZone.TryAccept(this);
-            if (accepted)
-            {
-                LockInPlace();
-                OnCorrectDropped?.Invoke();
-                return;
-            }
-        }
-
-        // Ã»³É¹¦Âä¿ò£º±£³Öµ±Ç°Î»ÖÃ£¨ÄãÒ²¿ÉÒÔ¸Ä³É»Øµ½³öÉúµã£©
-    }
-
-    public void SnapTo(Transform anchor)
-    {
-        transform.position = anchor.position;
-        transform.rotation = anchor.rotation;
-    }
-
-    public void LockInPlace()
-    {
+        if (locked) return;
         locked = true;
 
-        // Ëø¶¨ºó½¨Òé¹Øµô collider ·ÀÖ¹ÔÙ±»µãµ½
-        if (col != null) col.enabled = false;
+        // âœ… ä¸ŠæŠ¥ç±»å‹ï¼šApple / Fish
+        OnCollected?.Invoke(itemType);
 
-        if (rb != null)
+        if (disableObjectOnCollect) gameObject.SetActive(false);
+        else
         {
-            rb.isKinematic = true;
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
+            if (col != null) col.enabled = false;
+            var r = GetComponentInChildren<Renderer>();
+            if (r != null) r.enabled = false;
         }
     }
+#endif
 }

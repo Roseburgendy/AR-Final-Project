@@ -749,7 +749,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 605759625}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.0386}
+  m_LocalPosition: {x: 0, y: 0, z: -0.0103}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -758,7 +758,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.0691, y: 0.0409}
+  m_AnchoredPosition: {x: -0.0697, y: 0.032}
   m_SizeDelta: {x: 0.03, y: 0.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &678712312
@@ -1040,6 +1040,112 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 872976095}
   m_CullTransparentMesh: 1
+--- !u!1 &964752527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 964752531}
+  - component: {fileID: 964752530}
+  - component: {fileID: 964752529}
+  - component: {fileID: 964752528}
+  m_Layer: 0
+  m_Name: Plane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!64 &964752528
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964752527}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &964752529
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964752527}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 02cd2fe07318c924e9ae57c30d204390, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &964752530
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964752527}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &964752531
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964752527}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -0.00039999752, y: 0.0002, z: -0.00010000289}
+  m_LocalScale: {x: 0.019745247, y: 0.01, z: 0.011379}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1430977091}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1351245456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1091,7 +1197,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 447b68add0d3e134e8010f782db021db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fill01: 0
+  ringFillImage: {fileID: 0}
+  current01: 0
 --- !u!1 &1405990291
 GameObject:
   m_ObjectHideFlags: 0
@@ -1181,7 +1288,7 @@ GameObject:
   - component: {fileID: 1430977094}
   - component: {fileID: 1430977095}
   m_Layer: 0
-  m_Name: ImageTarget
+  m_Name: ImageTarget3.1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1278,6 +1385,7 @@ Transform:
   - {fileID: 3586733155381061745}
   - {fileID: 180705949}
   - {fileID: 678712313}
+  - {fileID: 964752531}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1430977094
@@ -1298,9 +1406,23 @@ MonoBehaviour:
   narrative1: {fileID: 8300000, guid: 856e172655e98074990f8902e3403e80, type: 3}
   narrative2: {fileID: 8300000, guid: a7403359ad0033747a573edcee976854, type: 3}
   gameplayRoot: {fileID: 678712312}
-  circularProgress: {fileID: 2000404429}
-  dropZones: []
-  draggableItems: []
+  appleProgress: {fileID: 2000404429}
+  fishProgress: {fileID: 1351245458}
+  draggableItems:
+  - {fileID: 64455954372639508}
+  - {fileID: 64455954902623270}
+  - {fileID: 64455954202765567}
+  - {fileID: 64455954370100900}
+  - {fileID: 64455954160828317}
+  - {fileID: 5299978914814519040}
+  - {fileID: 5299978915457742924}
+  autoFindItemsUnderGameplayRoot: 1
+  countOnlyActiveItems: 1
+  itemsRootOverride: {fileID: 0}
+  tipsAfter5Secs: {fileID: 8300000, guid: 7e71f6d7d19e190459f557838d8ff59b, type: 3}
+  idleTipDelaySeconds: 5
+  stopTipWhenCollected: 1
+  winnerClip: {fileID: 8300000, guid: ed3d2d9a523f59f4f98d49df25756590, type: 3}
 --- !u!114 &1430977095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1470,11 +1592,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4599623651521188, guid: 525f8fd0a40454607b8b2b17e12115a1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0051
+      value: 0.0003
       objectReference: {fileID: 0}
     - target: {fileID: 4599623651521188, guid: 525f8fd0a40454607b8b2b17e12115a1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.0438
+      value: -0.0509
       objectReference: {fileID: 0}
     - target: {fileID: 4599623651521188, guid: 525f8fd0a40454607b8b2b17e12115a1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1814,7 +1936,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.0643, y: 0.0409}
+  m_AnchoredPosition: {x: 0.0685, y: 0.0409}
   m_SizeDelta: {x: 0.03, y: 0.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1851070529
@@ -2084,7 +2206,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 447b68add0d3e134e8010f782db021db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fill01: 0
+  ringFillImage: {fileID: 872976097}
+  current01: 0
 --- !u!1 &2096213313
 GameObject:
   m_ObjectHideFlags: 0
@@ -2315,7 +2438,7 @@ Transform:
   m_GameObject: {fileID: 1623220480925744}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0296, y: 0.0446, z: 0.0133}
+  m_LocalPosition: {x: 0.0279, y: 0.0513, z: 0.0104}
   m_LocalScale: {x: 0.035, y: 0.035, z: 0.035}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2360,7 +2483,7 @@ Transform:
   m_GameObject: {fileID: 1529472547160839}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0706, y: -0.0003, z: -0.0375}
+  m_LocalPosition: {x: -0.0706, y: -0.0003, z: -0.0092}
   m_LocalScale: {x: 0.042552, y: 0.042552, z: 0.042552}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -2726,7 +2849,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2755,10 +2878,8 @@ MonoBehaviour:
   draggableRayMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  dropZoneMask:
-    serializedVersion: 2
-    m_Bits: 8
-  dropSearchRadius: 0.2
+  enableTapToCollect: 1
+  disableObjectOnCollect: 1
 --- !u!64 &64455954202765566
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2769,7 +2890,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2798,10 +2919,8 @@ MonoBehaviour:
   draggableRayMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  dropZoneMask:
-    serializedVersion: 2
-    m_Bits: 8
-  dropSearchRadius: 0.2
+  enableTapToCollect: 1
+  disableObjectOnCollect: 1
 --- !u!64 &64455954370100899
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2812,7 +2931,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2841,10 +2960,8 @@ MonoBehaviour:
   draggableRayMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  dropZoneMask:
-    serializedVersion: 2
-    m_Bits: 8
-  dropSearchRadius: 0.2
+  enableTapToCollect: 1
+  disableObjectOnCollect: 1
 --- !u!64 &64455954372639507
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2855,7 +2972,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2884,10 +3001,8 @@ MonoBehaviour:
   draggableRayMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  dropZoneMask:
-    serializedVersion: 2
-    m_Bits: 8
-  dropSearchRadius: 0.2
+  enableTapToCollect: 1
+  disableObjectOnCollect: 1
 --- !u!64 &64455954902623269
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2898,7 +3013,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2927,10 +3042,8 @@ MonoBehaviour:
   draggableRayMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  dropZoneMask:
-    serializedVersion: 2
-    m_Bits: 8
-  dropSearchRadius: 0.2
+  enableTapToCollect: 1
+  disableObjectOnCollect: 1
 --- !u!64 &64971542503214845
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2967,7 +3080,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceptType: Apple
   snapAnchor: {fileID: 1520913801}
-  snapRadius: 0.15
+  <IsFilled>k__BackingField: 0
+  <CurrentItem>k__BackingField: {fileID: 0}
 --- !u!64 &64971543379407340
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3004,7 +3118,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceptType: Fish
   snapAnchor: {fileID: 248329878}
-  snapRadius: 0.15
+  <IsFilled>k__BackingField: 0
+  <CurrentItem>k__BackingField: {fileID: 0}
 --- !u!4 &1404183788603703600
 Transform:
   m_ObjectHideFlags: 0
@@ -3753,10 +3868,8 @@ MonoBehaviour:
   draggableRayMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  dropZoneMask:
-    serializedVersion: 2
-    m_Bits: 8
-  dropSearchRadius: 0.2
+  enableTapToCollect: 1
+  disableObjectOnCollect: 1
 --- !u!4 &5299978915457742922
 Transform:
   m_ObjectHideFlags: 0
@@ -3812,10 +3925,8 @@ MonoBehaviour:
   draggableRayMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  dropZoneMask:
-    serializedVersion: 2
-    m_Bits: 8
-  dropSearchRadius: 0.2
+  enableTapToCollect: 1
+  disableObjectOnCollect: 1
 --- !u!4 &5341858451382121357
 Transform:
   m_ObjectHideFlags: 0

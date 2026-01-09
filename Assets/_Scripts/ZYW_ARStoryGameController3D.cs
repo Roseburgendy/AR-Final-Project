@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Vuforia;
@@ -8,8 +8,8 @@ public class ZYW_ARStoryGameController3D : MonoBehaviour
     [Header("Vuforia")]
     public ObserverBehaviour imageTargetObserver;
 
-    [Header("Camera (for dragging rays)")]
-    public Camera arCamera; // ARCamera ÍÏ½øÀ´
+    [Header("Camera (for clicking rays)")]
+    public Camera arCamera;
 
     [Header("Audio")]
     public AudioSource narrationSource;
@@ -17,14 +17,39 @@ public class ZYW_ARStoryGameController3D : MonoBehaviour
     public AudioClip narrative2;
 
     [Header("Gameplay")]
-    public GameObject gameplayRoot;                 // ³õÊ¼Òş²Ø
-    public ZYW_CircularProgressUI circularProgress;     // UI Ô²»·
-    public List<ZYW_DropZone3D> dropZones = new List<ZYW_DropZone3D>();
+    public GameObject gameplayRoot;
+
+    [Header("Progress UI (Split)")]
+    public ZYW_CircularProgressUI appleProgress;
+    public ZYW_CircularProgressUI fishProgress;
+
+    [Header("Items")]
     public List<ZYW_Draggable3D> draggableItems = new List<ZYW_Draggable3D>();
 
+    [Header("Auto Scan (RECOMMENDED)")]
+    public bool autoFindItemsUnderGameplayRoot = true;   // è‡ªåŠ¨æ‰«æï¼Œé¿å…æ¼ç‰©ä½“
+    public bool countOnlyActiveItems = true;             // åªç»Ÿè®¡æ¿€æ´»ç‰©ä½“
+    public Transform itemsRootOverride = null;           // å¯é€‰ï¼šä¸å¡«å°±ç”¨ gameplayRoot
+
+    [Header("Idle Tip")]
+    public AudioClip tipsAfter5Secs;         // TipsAfter5Secs.mp3
+    public float idleTipDelaySeconds = 5f;   // 5 ç§’
+    public bool stopTipWhenCollected = true; // æ”¶é›†åå¦‚æœæç¤ºåœ¨æ’­å°±åœæ­¢
+
+    [Header("Winner")]
+    public AudioClip winnerClip;             // Winner.mp3
+
     private bool hasTriggered = false;
-    private int totalNeeded = 0;
-    private int correctCount = 0;
+
+    private int appleTotal = 0;
+    private int fishTotal = 0;
+    private int appleCollected = 0;
+    private int fishCollected = 0;
+
+    private Coroutine idleTipCoroutine;
+    private bool hasAnyCollectedSinceGameplayShown = false;
+
+    private bool hasPlayedWinner = false;
 
     private void Reset()
     {
@@ -34,25 +59,18 @@ public class ZYW_ARStoryGameController3D : MonoBehaviour
     private void Awake()
     {
         if (gameplayRoot != null) gameplayRoot.SetActive(false);
-        if (circularProgress != null) circularProgress.SetProgress01(0f);
 
         if (imageTargetObserver == null) imageTargetObserver = GetComponent<ObserverBehaviour>();
         if (imageTargetObserver != null)
-        {
             imageTargetObserver.OnTargetStatusChanged += OnTargetStatusChanged;
-        }
         else
-        {
-            Debug.LogError("[ARStoryGameController3D] Missing ObserverBehaviour on ImageTarget.");
-        }
+            Debug.LogError("[ZYW_ARStoryGameController3D] Missing ObserverBehaviour on ImageTarget.");
     }
 
     private void OnDestroy()
     {
         if (imageTargetObserver != null)
-        {
             imageTargetObserver.OnTargetStatusChanged -= OnTargetStatusChanged;
-        }
     }
 
     private void OnTargetStatusChanged(ObserverBehaviour behaviour, TargetStatus status)
@@ -71,18 +89,19 @@ public class ZYW_ARStoryGameController3D : MonoBehaviour
 
     private IEnumerator RunSequence()
     {
-        // 1) narrative1
         yield return PlayClip(narrative1);
 
-        // 2) ¿ªÆôÍæ·¨ÏÔÊ¾ + °ó¶¨ÍÏ×§/½ø¶ÈÍ³¼Æ + narrative2
         if (gameplayRoot != null) gameplayRoot.SetActive(true);
 
-        SetupDraggingAndProgress();
+        SetupClickAndProgress();
 
+        // å…ˆå®Œæ•´æ’­æ”¾ narrative2
         yield return PlayClip(narrative2);
 
-        // narrative2 ²¥Íê²»´ú±íÍê³É£»Íê³ÉÓÉÍÏ×§½ø¶È¾ö¶¨
+        // âœ… narrative2 æ’­å®Œä¹‹åï¼Œæ‰å¼€å§‹ 5 ç§’æ— æ“ä½œè®¡æ—¶
+        StartIdleTipTimer();
     }
+
 
     private IEnumerator PlayClip(AudioClip clip)
     {
@@ -95,47 +114,156 @@ public class ZYW_ARStoryGameController3D : MonoBehaviour
         while (narrationSource.isPlaying) yield return null;
     }
 
-    private void SetupDraggingAndProgress()
+    private void SetupClickAndProgress()
     {
-        // ĞèÒªÍê³ÉµÄÊıÁ¿£ºÒÔ¿òÎª×¼£¨Ã¿¸ö¿òÖ»ÄÜÌîÒ»´Î£©
-        totalNeeded = (dropZones != null) ? dropZones.Count : 0;
-        correctCount = 0;
+        appleCollected = 0;
+        fishCollected = 0;
+        appleTotal = 0;
+        fishTotal = 0;
 
-        if (circularProgress != null) circularProgress.SetProgress01(0f);
+        hasAnyCollectedSinceGameplayShown = false;
+        hasPlayedWinner = false;
 
-        // ¸øÃ¿¸ö draggable ×¢Èë camera ºÍ»Øµ÷
-        if (draggableItems != null)
+        // âœ… è‡ªåŠ¨æ‰«æï¼šé¿å…æ‰‹åŠ¨ list æ¼æ‰ç‰©ä½“
+        if (autoFindItemsUnderGameplayRoot)
         {
-            foreach (var item in draggableItems)
+            Transform root = itemsRootOverride != null
+                ? itemsRootOverride
+                : (gameplayRoot != null ? gameplayRoot.transform : transform);
+
+            draggableItems = new List<ZYW_Draggable3D>(root.GetComponentsInChildren<ZYW_Draggable3D>(true));
+        }
+
+        // ç»Ÿè®¡æ€»æ•°ï¼ˆæŒ‰ itemTypeï¼‰
+        foreach (var item in draggableItems)
+        {
+            if (item == null) continue;
+
+            if (countOnlyActiveItems && !item.gameObject.activeInHierarchy)
+                continue;
+
+            string type = NormalizeType(item.itemType);
+
+            if (type == "APPLE") appleTotal++;
+            else if (type == "FISH") fishTotal++;
+        }
+
+        // åˆå§‹åŒ– UI
+        if (appleProgress != null) appleProgress.SetProgress01(0f);
+        if (fishProgress != null) fishProgress.SetProgress01(0f);
+
+        // ç»‘å®šå›è°ƒ + æ³¨å…¥ç›¸æœº
+        foreach (var item in draggableItems)
+        {
+            if (item == null) continue;
+
+            if (item.dragCamera == null) item.dragCamera = arCamera != null ? arCamera : Camera.main;
+
+            item.OnCollected = null;
+            item.OnCollected += OnItemCollected;
+        }
+
+        Debug.Log($"[Setup] AppleTotal={appleTotal}, FishTotal={fishTotal}, ItemsFound={draggableItems.Count}");
+    }
+
+    private void OnItemCollected(string rawType)
+    {
+        // ä»»æ„æ”¶é›†å‘ç”Ÿï¼šæ ‡è®°å·²æ“ä½œ + å–æ¶ˆæç¤ºè®¡æ—¶
+        hasAnyCollectedSinceGameplayShown = true;
+        StopIdleTipTimer();
+
+        // å¦‚æœæç¤ºéŸ³æ­£åœ¨æ’­ï¼Œæ”¶é›†ååœæ­¢ï¼ˆå¯é€‰ï¼‰
+        if (stopTipWhenCollected && narrationSource != null &&
+            narrationSource.clip == tipsAfter5Secs && narrationSource.isPlaying)
+        {
+            narrationSource.Stop();
+        }
+
+        string type = NormalizeType(rawType);
+
+        if (type == "APPLE")
+        {
+            appleCollected++;
+            float p = (appleTotal <= 0) ? 1f : (float)appleCollected / appleTotal;
+            if (appleProgress != null) appleProgress.SetProgress01(p);
+        }
+        else if (type == "FISH")
+        {
+            fishCollected++;
+            float p = (fishTotal <= 0) ? 1f : (float)fishCollected / fishTotal;
+            if (fishProgress != null) fishProgress.SetProgress01(p);
+        }
+
+        // âœ… å…¨éƒ¨å®Œæˆï¼šä¸¤ç±»éƒ½ç‚¹å®Œ -> æ’­ Winnerï¼ˆåªæ’­ä¸€æ¬¡ï¼‰
+        if (!hasPlayedWinner &&
+            appleCollected >= appleTotal &&
+            fishCollected >= fishTotal)
+        {
+            hasPlayedWinner = true;
+
+            if (appleProgress != null) appleProgress.SetProgress01(1f);
+            if (fishProgress != null) fishProgress.SetProgress01(1f);
+
+            // å½»åº•åœæ­¢æç¤ºè®¡æ—¶
+            StopIdleTipTimer();
+
+            // æ’­ Winner
+            if (narrationSource != null && winnerClip != null)
             {
-                if (item == null) continue;
+                narrationSource.Stop();
+                narrationSource.clip = winnerClip;
+                narrationSource.Play();
+            }
 
-                if (item.dragCamera == null) item.dragCamera = arCamera != null ? arCamera : Camera.main;
+            Debug.Log("[ZYW_ARStoryGameController3D] Winner! All apples and fish collected.");
+        }
+    }
 
-                // ÇåÀí¾É»Øµ÷£¬±ÜÃâÖØ¸´ÀÛ¼Æ
-                item.OnCorrectDropped = null;
-                item.OnCorrectDropped += OnCorrectDropped;
+    private void StartIdleTipTimer()
+    {
+        StopIdleTipTimer(); // æ¸…ç†æ—§çš„
+        idleTipCoroutine = StartCoroutine(IdleTipRoutine());
+    }
+
+    private void StopIdleTipTimer()
+    {
+        if (idleTipCoroutine != null)
+        {
+            StopCoroutine(idleTipCoroutine);
+            idleTipCoroutine = null;
+        }
+    }
+
+    private IEnumerator IdleTipRoutine()
+    {
+        float t = 0f;
+        while (t < idleTipDelaySeconds)
+        {
+            // æœŸé—´æœ‰æ”¶é›†åˆ™é€€å‡º
+            if (hasAnyCollectedSinceGameplayShown) yield break;
+
+            // å¦‚æœå·²ç»å®Œæˆäº†ä¹Ÿæ²¡å¿…è¦æç¤º
+            if (hasPlayedWinner) yield break;
+
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        // 5 ç§’åˆ°äº†è¿˜æ²¡æ”¶é›†ä¸”æœªå®Œæˆï¼šæ’­æ”¾æç¤ºéŸ³
+        if (!hasAnyCollectedSinceGameplayShown && !hasPlayedWinner)
+        {
+            if (narrationSource != null && tipsAfter5Secs != null)
+            {
+                narrationSource.Stop();
+                narrationSource.clip = tipsAfter5Secs;
+                narrationSource.Play();
             }
         }
     }
 
-    private void OnCorrectDropped()
+    private string NormalizeType(string t)
     {
-        correctCount++;
-        float p = (totalNeeded <= 0) ? 1f : (float)correctCount / totalNeeded;
-
-        if (circularProgress != null) circularProgress.SetProgress01(p);
-
-        if (correctCount >= totalNeeded)
-        {
-            OnAllCompleted();
-        }
-    }
-
-    private void OnAllCompleted()
-    {
-        if (circularProgress != null) circularProgress.SetProgress01(1f);
-        Debug.Log("[ARStoryGameController3D] Completed: all items placed correctly.");
-        // ÕâÀïÄã¿ÉÒÔ¼Ó£ºÍê³ÉÒôĞ§/Á£×Ó/½âËøÏÂÒ»Ò³
+        if (string.IsNullOrEmpty(t)) return "";
+        return t.Trim().ToUpperInvariant();
     }
 }
