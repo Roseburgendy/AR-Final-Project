@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 4856647853830708}
   - component: {fileID: 95977287038958530}
   m_Layer: 0
-  m_Name: DuckB
+  m_Name: DuckEat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
