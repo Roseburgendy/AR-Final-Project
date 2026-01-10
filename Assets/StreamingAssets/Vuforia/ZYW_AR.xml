@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig>
+  <Tracking>
+    <ImageTarget name="Ch333" size="1.000000 0.571429" />
+    <ImageTarget name="Ch332" size="1.000000 0.571429" />
+    <ImageTarget name="Ch331" size="1.000000 0.571429" />
+    <ImageTarget name="Ch321" size="1.000000 0.571429" />
+    <ImageTarget name="CH3" size="1.000000 0.571429" />
+  </Tracking>
+</QCARConfig>
