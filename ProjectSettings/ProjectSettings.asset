@@ -4,11 +4,11 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 26
-  productGUID: a977e9c43f1c46f42ba95f7a865d1fd6
+  productGUID: 9e5b172c473f5df4ba2fa2a5ace78d3a
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
-  defaultScreenOrientation: 0
+  defaultScreenOrientation: 2
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
@@ -917,14 +917,14 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: AR Final Project
+  metroPackageName: AR-Final-Project
   metroPackageVersion: 11.4.4.0
   metroCertificatePath: Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: Vuforia
   metroCertificateIssuer: Vuforia
   metroCertificateNotAfter: 80a428773e1cd501
-  metroApplicationDescription: AR Final Project
+  metroApplicationDescription: AR-Final-Project
   wsaImages:
     65636: Assets/Common/Icons/UWP/StoreLogo.scale-100.png
     65661: Assets/Common/Icons/UWP/StoreLogo.scale-125.png
@@ -970,7 +970,7 @@ PlayerSettings:
   syncCapabilities: 0
   platformCapabilities:
     WindowsStoreApps:
-      CodeGeneration: False
+      EnterpriseAuthentication: False
       OfflineMapsManagement: False
       HumanInterfaceDevice: False
       Location: False
@@ -1005,8 +1005,8 @@ PlayerSettings:
       Contacts: False
       Proximity: False
       InternetClient: True
+      CodeGeneration: False
       BackgroundMediaPlayback: False
-      EnterpriseAuthentication: False
   metroTargetDeviceFamilies:
     Desktop: False
     Holographic: False
@@ -1070,7 +1070,7 @@ PlayerSettings:
   cloudProjectId: 375e1d57-fd24-4744-adf2-2c0d612e9d53
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: AR Final Project
+  projectName: 
   organizationId: unity_45104bf1126d4f010d35
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 1
