@@ -9,8 +9,6 @@ using UnityEngine.InputSystem;
 public class ZYW_Draggable3D : MonoBehaviour
 {
     public string itemType; // "Apple" or "Fish"
-
-    // ✅ 改成带类型的回调
     public Action<string> OnCollected;
 
     [Header("Camera / Raycast")]
@@ -24,11 +22,6 @@ public class ZYW_Draggable3D : MonoBehaviour
     private Rigidbody rb;
     private Collider col;
     private bool locked = false;
-
-#if ENABLE_INPUT_SYSTEM
-    private bool pointerDownThisFrame;
-    private Vector2 pointerPos;
-#endif
 
     private void Awake()
     {
@@ -50,34 +43,56 @@ public class ZYW_Draggable3D : MonoBehaviour
         if (dragCamera == null) dragCamera = Camera.main;
         if (dragCamera == null) return;
 
-#if ENABLE_INPUT_SYSTEM
-        ReadPointer();
+        if (!PointerPressedThisFrame(out Vector2 screenPos)) return;
 
-        if (pointerDownThisFrame && RayHitsThisOrChild(pointerPos))
+        if (RayHitsThisOrChild(screenPos))
         {
             Collect();
         }
-#endif
     }
 
-#if ENABLE_INPUT_SYSTEM
-    private void ReadPointer()
+    private bool PointerPressedThisFrame(out Vector2 screenPos)
     {
-        pointerDownThisFrame = false;
+        screenPos = default;
 
+#if ENABLE_INPUT_SYSTEM
         if (Mouse.current != null)
         {
-            pointerDownThisFrame = Mouse.current.leftButton.wasPressedThisFrame;
-            pointerPos = Mouse.current.position.ReadValue();
-            return;
+            if (Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                screenPos = Mouse.current.position.ReadValue();
+                return true;
+            }
         }
 
         if (Touchscreen.current != null)
         {
             var t = Touchscreen.current.primaryTouch;
-            pointerDownThisFrame = t.press.wasPressedThisFrame;
-            pointerPos = t.position.ReadValue();
+            if (t.press.wasPressedThisFrame)
+            {
+                screenPos = t.position.ReadValue();
+                return true;
+            }
         }
+#else
+        // Old Input fallback
+        if (Input.GetMouseButtonDown(0))
+        {
+            screenPos = Input.mousePosition;
+            return true;
+        }
+
+        if (Input.touchCount > 0)
+        {
+            var t = Input.GetTouch(0);
+            if (t.phase == TouchPhase.Began)
+            {
+                screenPos = t.position;
+                return true;
+            }
+        }
+#endif
+        return false;
     }
 
     private bool RayHitsThisOrChild(Vector2 screenPos)
@@ -95,10 +110,11 @@ public class ZYW_Draggable3D : MonoBehaviour
         if (locked) return;
         locked = true;
 
-        // ✅ 上报类型：Apple / Fish
+        PlayCollectSfx();
         OnCollected?.Invoke(itemType);
 
-        if (disableObjectOnCollect) gameObject.SetActive(false);
+        if (disableObjectOnCollect)
+            gameObject.SetActive(false);
         else
         {
             if (col != null) col.enabled = false;
@@ -106,5 +122,14 @@ public class ZYW_Draggable3D : MonoBehaviour
             if (r != null) r.enabled = false;
         }
     }
-#endif
+
+    private void PlayCollectSfx()
+    {
+        if (ZYW_SFXManager.I == null) return;
+
+        if (itemType == "Apple")
+            ZYW_SFXManager.I.PlayApple();
+        else if (itemType == "Fish")
+            ZYW_SFXManager.I.PlayFish();
+    }
 }

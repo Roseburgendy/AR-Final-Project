@@ -28,6 +28,11 @@ public class ZYW_ImageTargetTapSwap : MonoBehaviour
     [Header("Optional: prevent overlap flicker")]
     public Vector3 planeBLocalOffset = new Vector3(0f, 0f, -0.001f);
 
+    [Header("SFX (On Tap)")]
+    public AudioSource sfxSource;
+    public AudioClip tapSfx;
+    public bool playTapSfx = true;
+
     private bool hasSwapped = false;
     private bool isFading = false;
     private int texId;
@@ -40,6 +45,9 @@ public class ZYW_ImageTargetTapSwap : MonoBehaviour
             enabled = false;
             return;
         }
+
+        // SFX 不强制，但尽量自动拿一个
+        if (sfxSource == null) sfxSource = GetComponent<AudioSource>();
 
         texId = Shader.PropertyToID("_MainTex");
         if (planeA.sharedMaterial != null && planeA.sharedMaterial.HasProperty("_BaseMap"))
@@ -74,6 +82,10 @@ public class ZYW_ImageTargetTapSwap : MonoBehaviour
         if (t == hitRoot || t.IsChildOf(hitRoot))
         {
             Debug.Log("HIT: " + hit.collider.name);
+
+            if (playTapSfx && sfxSource != null && tapSfx != null)
+                sfxSource.PlayOneShot(tapSfx);
+
             StartCoroutine(FadeAToBOnce());
         }
     }
