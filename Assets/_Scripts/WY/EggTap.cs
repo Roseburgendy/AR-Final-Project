@@ -1,18 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EggTap : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject duckling;
+    public Animator eggAnimator;
+    private bool cracked = false;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (cracked) return;
+
+        if (Input.touchCount >0 && Input.touches[0].phase == TouchPhase.Began)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.transform == transform)
+                {
+                    CrackEgg();
+                }
+            }
+        }
+    }
+
+    // Crack Egg
+    void CrackEgg()
+    {
+        cracked = true;
+
+        if (eggAnimator != null)
+            eggAnimator.SetTrigger("Crack");
+
+        Invoke(nameof(ShowDuckling), 1.2f);
+
+        //StoryUIManager.Instance.OnEggCracked();
+    }
+
+    // show ducks
+    void ShowDuckling()
+    {
+        duckling.SetActive(true);
+        duckling.GetComponent<Animator>()?.SetTrigger("Hatch");
+        gameObject.SetActive(false);
     }
 }
