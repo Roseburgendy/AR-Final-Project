@@ -1,3 +1,4 @@
+using _Scripts.WY.DialogueSystem;
 using UnityEngine;
 
 public class EggTap : MonoBehaviour
@@ -10,17 +11,34 @@ public class EggTap : MonoBehaviour
     {
         if (cracked) return;
 
-        if (Input.touchCount >0 && Input.touches[0].phase == TouchPhase.Began)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-            RaycastHit hit;
+        Vector3 inputPosition;
+        bool hasInput = false;
 
-            if (Physics.Raycast(ray, out hit))
+        // 1. Touch input（Android / iOS）
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            inputPosition = Input.GetTouch(0).position;
+            hasInput = true;
+        }
+        // 2. Mouse input（Editor / PC 调试）
+        else if (Input.GetMouseButtonDown(0))
+        {
+            inputPosition = Input.mousePosition;
+            hasInput = true;
+        }
+        else
+        {
+            return;
+        }
+
+        Ray ray = Camera.main.ScreenPointToRay(inputPosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.transform == transform)
             {
-                if (hit.transform == transform)
-                {
-                    CrackEgg();
-                }
+                CrackEgg();
             }
         }
     }
@@ -31,10 +49,10 @@ public class EggTap : MonoBehaviour
         cracked = true;
 
         if (eggAnimator != null)
-            eggAnimator.SetTrigger("Crack");
+            eggAnimator.SetTrigger("crack");
 
         Invoke(nameof(ShowDuckling), 1.2f);
-
+        DialogueController.instance.PlayDialogue("test");
         //StoryUIManager.Instance.OnEggCracked();
     }
 
@@ -42,7 +60,7 @@ public class EggTap : MonoBehaviour
     void ShowDuckling()
     {
         duckling.SetActive(true);
-        duckling.GetComponent<Animator>()?.SetTrigger("Hatch");
-        gameObject.SetActive(false);
+        duckling.GetComponent<Animator>()?.SetTrigger("jump");
+       // gameObject.SetActive(false);
     }
 }
