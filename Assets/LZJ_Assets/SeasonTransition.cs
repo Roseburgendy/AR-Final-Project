@@ -192,7 +192,7 @@ public class SeasonTransition : MonoBehaviour, IPointerDownHandler, IPointerUpHa
             return;
         }
 
-        Debug.Log("✓ DialogueController 存在");
+        Debug.Log("DialogueController 存在");
         Debug.Log($"尝试播放对话：{page7DialogueKey}");
 
         // 播放对话

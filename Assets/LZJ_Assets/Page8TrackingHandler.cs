@@ -4,10 +4,10 @@ using _Scripts.WY.DialogueSystem;
 
 public class Page8TrackingHandler : DefaultObserverEventHandler
 {
-    [Header("¶Ô»°ÉèÖÃ")]
+    [Header("ï¿½Ô»ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public string page8DialogueKey = "Scene8";
     
-    [Header("´ºÌì³¡¾°")]
+    [Header("ï¿½ï¿½ï¿½ì³¡ï¿½ï¿½")]
     public GameObject springScene;
     
     private bool hasTriggered = false;
@@ -16,7 +16,7 @@ public class Page8TrackingHandler : DefaultObserverEventHandler
     {
         base.OnTrackingFound();
         
-        Debug.Log("=== Ê¶±ðµ½µÚ8Ò³ ===");
+        Debug.Log("=== Ê¶ï¿½ðµ½µï¿½8Ò³ ===");
         
         if (!hasTriggered)
         {
@@ -27,36 +27,40 @@ public class Page8TrackingHandler : DefaultObserverEventHandler
     
     void InitializePage8()
     {
-        Debug.Log("³õÊ¼»¯µÚ8Ò³³¡¾°");
+        Debug.Log("ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½8Ò³ï¿½ï¿½ï¿½ï¿½");
         
-        // ÏÔÊ¾´ºÌì³¡¾°
+        // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ì³¡ï¿½ï¿½
         if (springScene != null)
         {
             springScene.SetActive(true);
         }
         
-        // ²¥·Å´ºÌìÒôÀÖ
+        // ï¿½ï¿½ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (AudioManager.instance != null)
         {
             AudioManager.instance.Play("Spring");
-            Debug.Log("²¥·Å´ºÌìÒôÀÖ");
+            Debug.Log("ï¿½ï¿½ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+        }
+        if (AudioManager.instance == null)
+        {
+            Debug.Log("Not Found");
         }
         
-        // ²¥·ÅµÚ8Ò³¶Ô»°
+        // ï¿½ï¿½ï¿½Åµï¿½8Ò³ï¿½Ô»ï¿½
         if (DialogueController.instance != null)
         {
             DialogueController.instance.PlayDialogue(page8DialogueKey);
-            Debug.Log($"²¥·Å¶Ô»°£º{page8DialogueKey}");
+            Debug.Log($"ï¿½ï¿½ï¿½Å¶Ô»ï¿½ï¿½ï¿½{page8DialogueKey}");
         }
         else
         {
-            Debug.LogError("DialogueController ²»´æÔÚ£¡");
+            Debug.LogError("DialogueController ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½");
         }
     }
     
     protected override void OnTrackingLost()
     {
         base.OnTrackingLost();
-        Debug.Log("µÚ8Ò³Í¼Æ¬¶ªÊ§");
+        Debug.Log("ï¿½ï¿½8Ò³Í¼Æ¬ï¿½ï¿½Ê§");
     }
 }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5533221598366279135
+--- !u!1 &9079679640310038317
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7185566403109804471}
-  - component: {fileID: 2594138002059032902}
+  - component: {fileID: 4819982985137972768}
+  - component: {fileID: 2802586437994542498}
   m_Layer: 0
-  m_Name: AudioManager
+  m_Name: AudioManager1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7185566403109804471
+--- !u!4 &4819982985137972768
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5533221598366279135}
+  m_GameObject: {fileID: 9079679640310038317}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1195.7274, y: 1772.9414, z: 7.0377927}
@@ -32,13 +32,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2594138002059032902
+--- !u!114 &2802586437994542498
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5533221598366279135}
+  m_GameObject: {fileID: 9079679640310038317}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1472c09e08be03479acb86c57cfec87, type: 3}
@@ -47,8 +47,8 @@ MonoBehaviour:
   musicCategory:
     categoryName: Music
     sounds:
-    - name: Spring
-      clip: {fileID: 8300000, guid: 4d27f6ffe9e8c6344ad15019f4525a01, type: 3}
+    - name: Winter
+      clip: {fileID: 8300000, guid: 5a972cb2a20a5e548a953a6a9891cb8e, type: 3}
       source: {fileID: 0}
   sfxCategory:
     categoryName: SFX
@@ -56,23 +56,26 @@ MonoBehaviour:
   voiceCategory:
     categoryName: Voice
     sounds:
-    - name: 81
-      clip: {fileID: 8300000, guid: 447e0e9623ebdda418c9d7a070c5da3f, type: 3}
+    - name: 71
+      clip: {fileID: 8300000, guid: 17fe9ff6f2087624bbe03290cf4a0cb3, type: 3}
       source: {fileID: 0}
-    - name: 82
-      clip: {fileID: 8300000, guid: 6ac5635508542c645bc1b48883e8f3d7, type: 3}
+    - name: 72
+      clip: {fileID: 8300000, guid: 9c28ac7d422a6ac488f519e9e5a1fde3, type: 3}
       source: {fileID: 0}
-    - name: 83
-      clip: {fileID: 8300000, guid: 55a47fc9bc44d384cbe0b0c5fe670aeb, type: 3}
+    - name: 73
+      clip: {fileID: 8300000, guid: b68ba42f896d7134aa48d40e6109836b, type: 3}
       source: {fileID: 0}
-    - name: 84
-      clip: {fileID: 8300000, guid: c29fc970d96ba5e4786d9bb64917686f, type: 3}
+    - name: 74
+      clip: {fileID: 8300000, guid: bba634587e5cb1e42977faed002fc126, type: 3}
       source: {fileID: 0}
-    - name: 85
-      clip: {fileID: 8300000, guid: 91fa97bc3a6a3974284ea91af520c29c, type: 3}
+    - name: 75
+      clip: {fileID: 8300000, guid: f767997f07242e446985845436d67102, type: 3}
       source: {fileID: 0}
-    - name: 86
-      clip: {fileID: 8300000, guid: 8b160ed624db6d845bad8e607280f8ab, type: 3}
+    - name: 76
+      clip: {fileID: 8300000, guid: 9325b9f0c2c25e549bfffe2b2280d918, type: 3}
+      source: {fileID: 0}
+    - name: 77
+      clip: {fileID: 8300000, guid: d611933fc2398504fa150ca7731f69ff, type: 3}
       source: {fileID: 0}
   ambientCategory:
     categoryName: Ambient
