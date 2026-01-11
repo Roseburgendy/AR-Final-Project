@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig>
   <Tracking>
+    <ImageTarget name="cut3" size="1.000000 0.558140" />
+    <ImageTarget name="cut2" size="1.000000 0.558140" />
     <ImageTarget name="Cut-1" size="1.000000 0.558140" />
   </Tracking>
 </QCARConfig>

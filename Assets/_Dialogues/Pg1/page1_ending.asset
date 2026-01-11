@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6ce04c7d510ba0469ee0764aae1d870, type: 3}
+  m_Name: page1_ending
+  m_EditorClassIdentifier: 
+  dialogueKey: page1_ending
+  subtitleLines:
+  - content: "One by one, the ducklings begin to hatch.Then, the largest egg starts
+      to crack\u2026"
+    clip: {fileID: 0}
+    overrideDuration: 0
+    postDelay: 0
+  - content: Out comes a duckling with gray feathers. He is bigger than his brothers
+      and sisters.
+    clip: {fileID: 0}
+    overrideDuration: 0
+    postDelay: 0
+  - content: Mother Duck tilts her head, looking at him with wonder.
+    clip: {fileID: 0}
+    overrideDuration: 0
+    postDelay: 0
