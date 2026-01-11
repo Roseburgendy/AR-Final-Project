@@ -177,6 +177,13 @@ namespace LX_Game
         /// </summary>
         IEnumerator EndGameSequence()
         {
+            // 2. 隐藏游戏UI
+            Debug.Log("剧情: 隐藏游戏UI");
+            if (gameUI != null)
+            {
+                gameUI.SetActive(false);
+            }
+
             // 禁用玩家控制
             if (duck != null)
             {
@@ -195,13 +202,6 @@ namespace LX_Game
             else
             {
                 yield return new WaitForSeconds(6f);
-            }
-
-            // 2. 隐藏游戏UI
-            Debug.Log("剧情: 隐藏游戏UI");
-            if (gameUI != null)
-            {
-                gameUI.SetActive(false);
             }
 
             yield return new WaitForSeconds(0.5f);

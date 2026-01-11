@@ -30,6 +30,8 @@ namespace LX_Game
         public Renderer dogRenderer; // 狗的渲染器（用于变色）
         public Color hitColor = Color.red; // 被击中时的颜色
         public float hitFlashDuration = 0.3f; // 变色持续时间
+        [Tooltip("Shader颜色属性名（Toon shader通常用 _BaseColor 或 _Color）")]
+        public string shaderColorProperty = "_BaseColor"; // Shader的颜色属性名
 
         [Header("边界检测")]
         public LX_BoundaryChecker boundaryChecker; // 边界检测器
@@ -60,7 +62,19 @@ namespace LX_Game
             if (dogRenderer != null)
             {
                 dogMaterial = dogRenderer.material;
-                originalColor = dogMaterial.color;
+                // 尝试从Toon shader获取颜色
+                if (dogMaterial.HasProperty("_BaseColor"))
+                {
+                    originalColor = dogMaterial.GetColor("_BaseColor");
+                }
+                else if (dogMaterial.HasProperty("_Color"))
+                {
+                    originalColor = dogMaterial.GetColor("_Color");
+                }
+                else
+                {
+                    originalColor = dogMaterial.color;
+                }
             }
             else
             {
@@ -69,7 +83,19 @@ namespace LX_Game
                 if (dogRenderer != null)
                 {
                     dogMaterial = dogRenderer.material;
-                    originalColor = dogMaterial.color;
+                    // 尝试从Toon shader获取颜色
+                    if (dogMaterial.HasProperty("_BaseColor"))
+                    {
+                        originalColor = dogMaterial.GetColor("_BaseColor");
+                    }
+                    else if (dogMaterial.HasProperty("_Color"))
+                    {
+                        originalColor = dogMaterial.GetColor("_Color");
+                    }
+                    else
+                    {
+                        originalColor = dogMaterial.color;
+                    }
                 }
             }
 
@@ -317,25 +343,82 @@ namespace LX_Game
         }
 
         /// <summary>
-        /// 变红闪烁效果
+        /// 变红闪烁效果（兼容Toon shader）
         /// </summary>
         void FlashRed()
         {
             if (dogMaterial != null)
             {
-                dogMaterial.color = hitColor;
+                // 尝试多种方式设置颜色，兼容不同shader
+                bool colorSet = false;
+                
+                // 方式1：尝试 _BaseColor（URP Toon shader常用）
+                if (dogMaterial.HasProperty("_BaseColor"))
+                {
+                    dogMaterial.SetColor("_BaseColor", hitColor);
+                    colorSet = true;
+                    Debug.Log("使用 _BaseColor 设置为红色");
+                }
+                // 方式2：尝试 _Color（Built-in和其他Toon shader）
+                else if (dogMaterial.HasProperty("_Color"))
+                {
+                    dogMaterial.SetColor("_Color", hitColor);
+                    colorSet = true;
+                    Debug.Log("使用 _Color 设置为红色");
+                }
+                // 方式3：尝试 _MainColor
+                else if (dogMaterial.HasProperty("_MainColor"))
+                {
+                    dogMaterial.SetColor("_MainColor", hitColor);
+                    colorSet = true;
+                    Debug.Log("使用 _MainColor 设置为红色");
+                }
+                
+                // 方式4：回退到标准方式
+                if (!colorSet)
+                {
+                    dogMaterial.color = hitColor;
+                    Debug.Log("使用 material.color 设置为红色");
+                }
+                
                 Invoke("RestoreColor", hitFlashDuration);
             }
         }
 
         /// <summary>
-        /// 恢复原始颜色
+        /// 恢复原始颜色（兼容Toon shader）
         /// </summary>
         void RestoreColor()
         {
             if (dogMaterial != null)
             {
-                dogMaterial.color = originalColor;
+                bool colorRestored = false;
+                
+                // 尝试多种方式恢复颜色
+                if (dogMaterial.HasProperty("_BaseColor"))
+                {
+                    dogMaterial.SetColor("_BaseColor", originalColor);
+                    colorRestored = true;
+                    Debug.Log("使用 _BaseColor 恢复原始颜色");
+                }
+                else if (dogMaterial.HasProperty("_Color"))
+                {
+                    dogMaterial.SetColor("_Color", originalColor);
+                    colorRestored = true;
+                    Debug.Log("使用 _Color 恢复原始颜色");
+                }
+                else if (dogMaterial.HasProperty("_MainColor"))
+                {
+                    dogMaterial.SetColor("_MainColor", originalColor);
+                    colorRestored = true;
+                    Debug.Log("使用 _MainColor 恢复原始颜色");
+                }
+                
+                if (!colorRestored)
+                {
+                    dogMaterial.color = originalColor;
+                    Debug.Log("使用 material.color 恢复原始颜色");
+                }
             }
         }
 
