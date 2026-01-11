@@ -5,11 +5,14 @@ public class EggTap : MonoBehaviour
 {
     public GameObject duckling;
     public Animator eggAnimator;
+    
     private bool cracked = false;
+    private Page1Controller pg1controller;
+    private bool canInteract = false;
 
     void Update()
     {
-        if (cracked) return;
+        if (!canInteract || cracked) return;
 
         Vector3 inputPosition;
         bool hasInput = false;
@@ -47,13 +50,14 @@ public class EggTap : MonoBehaviour
     void CrackEgg()
     {
         cracked = true;
+        // notify event suscriber to progress narrative
+        pg1controller.OnEggCracked();
 
+        // play animation
         if (eggAnimator != null)
             eggAnimator.SetTrigger("crack");
-
+        // show ducks
         Invoke(nameof(ShowDuckling), 1.2f);
-        DialogueController.instance.PlayDialogue("test");
-        //StoryUIManager.Instance.OnEggCracked();
     }
 
     // show ducks
@@ -62,5 +66,11 @@ public class EggTap : MonoBehaviour
         duckling.SetActive(true);
         duckling.GetComponent<Animator>()?.SetTrigger("jump");
        // gameObject.SetActive(false);
+    }
+
+    public void EnableInteraction(Page1Controller pg1controller)
+    {
+        this.pg1controller = pg1controller;
+        canInteract = true;
     }
 }

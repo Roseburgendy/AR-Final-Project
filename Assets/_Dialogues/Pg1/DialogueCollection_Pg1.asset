@@ -10,7 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 211b0e854226b7046b60ae0b241f594a, type: 3}
-  m_Name: DialogueCollection
+  m_Name: DialogueCollection_Pg1
   m_EditorClassIdentifier: 
   dialogues:
-  - {fileID: 11400000, guid: c6e8992d2fe09fd4599c7fb3149e00e8, type: 2}
+  - {fileID: 11400000, guid: 7e919417b5516804dbc8c292fd8fe313, type: 2}
+  - {fileID: 11400000, guid: 68c3d720181c36e4696b5551ae263d78, type: 2}
+  - {fileID: 11400000, guid: ec02eff0f8d20094789b4bb2cb33e63e, type: 2}
