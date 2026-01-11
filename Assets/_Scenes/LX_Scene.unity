@@ -3938,8 +3938,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.3732, y: -0.117}
-  m_SizeDelta: {x: 996.483, y: 218.0903}
+  m_AnchoredPosition: {x: -4.886, y: -1}
+  m_SizeDelta: {x: 915.0294, y: 166.4853}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &743616884
 CanvasRenderer:
@@ -3982,12 +3982,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
-    eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-    in culpa qui officia deserunt mollit anim id est laborum.
+  m_Text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. '
 --- !u!1 &755749952
 GameObject:
   m_ObjectHideFlags: 0
@@ -7188,15 +7184,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: da009629508d8ea4fa03a0b919d22e29, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -7230,7 +7226,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 322.13037}
+  m_AnchoredPosition: {x: 0, y: -336}
   m_SizeDelta: {x: -250, y: -768.2595}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1559024785
@@ -11389,12 +11385,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointA: {fileID: 117867982}
   pointB: {fileID: 108675842}
-  moveSpeed: 0.01
-  rotationSpeed: 0.05
+  moveSpeed: 0.02
+  rotationSpeed: 0.2
   arrivalThreshold: 0.0005
   maxHealth: 5
   detectionRadius: 0.02
-  dodgeDistance: 0.025
+  dodgeDistance: 0.015
   dodgeDuration: 0.5
   invincibleTime: 0.8
   dogRenderer: {fileID: 5451744141931493553}
