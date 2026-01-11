@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using _Scripts.WY.DialogueSystem;
 using UnityEngine;
 using Vuforia;
 
@@ -13,7 +14,10 @@ public class ZYWC31_ARStoryGameController3D : MonoBehaviour
 
     [Header("Audio")]
     public AudioSource narrationSource;
-    public AudioClip narrative1;
+    
+    [Header("Dialogue (Subtitle Only for Narrative1)")]
+    [SerializeField] private string narrative1Key = "narrative1";
+
     public AudioClip narrative2;
 
     [Header("Gameplay")]
@@ -89,8 +93,8 @@ public class ZYWC31_ARStoryGameController3D : MonoBehaviour
 
     private IEnumerator RunSequence()
     {
-        yield return PlayClip(narrative1);
-
+        yield return StartCoroutine(PlayNarrative1WithSubtitle());
+        
         if (gameplayRoot != null) gameplayRoot.SetActive(true);
 
         SetupClickAndProgress();
@@ -102,6 +106,19 @@ public class ZYWC31_ARStoryGameController3D : MonoBehaviour
         StartIdleTipTimer();
     }
 
+    private IEnumerator PlayNarrative1WithSubtitle()
+    {
+        if (DialogueController.instance == null)
+            yield break;
+
+        // 播放 narrative1（有字幕）
+        DialogueController.instance.PlayDialogue(narrative1Key);
+
+        // 等待它播完（用 DialogueData 的真实时长）
+        float dur = DialogueController.instance.GetDialogueDuration(narrative1Key);
+
+        yield return new WaitForSeconds(dur + 0.2f);
+    }
 
     private IEnumerator PlayClip(AudioClip clip)
     {
