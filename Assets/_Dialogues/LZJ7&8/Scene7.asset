@@ -15,32 +15,32 @@ MonoBehaviour:
   dialogueKey: Scene7
   subtitleLines:
   - content: 'Winter has arrived. '
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 17fe9ff6f2087624bbe03290cf4a0cb3, type: 3}
     overrideDuration: 0
     postDelay: 0
   - content: "The Ugly Duckling struggles through the snow, \nfacing the harsh cold
       winds."
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 9c28ac7d422a6ac488f519e9e5a1fde3, type: 3}
     overrideDuration: 0
     postDelay: 0
   - content: "Though his feathers remain gray and dull, \nhis body grows stronger
       with each step."
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: b68ba42f896d7134aa48d40e6109836b, type: 3}
     overrideDuration: 0
     postDelay: 0
   - content: His eyes show determination.
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: bba634587e5cb1e42977faed002fc126, type: 3}
     overrideDuration: 0
     postDelay: 0
   - content: He is no longer the weak little duckling from before.
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: f767997f07242e446985845436d67102, type: 3}
     overrideDuration: 0
     postDelay: 0
   - content: Press and hold to help time pass.
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 9325b9f0c2c25e549bfffe2b2280d918, type: 3}
     overrideDuration: 0
     postDelay: 0
   - content: Watch as winter melts away and spring arrives!
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: d611933fc2398504fa150ca7731f69ff, type: 3}
     overrideDuration: 0
     postDelay: 0
