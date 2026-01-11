@@ -113,12 +113,10 @@ namespace LX_Game
             if (gameManager != null)
             {
                 gameManager.TriggerGameStart();
-                Debug.Log("触发 LX_GameManager 开始游戏");
             }
             else if (gameManager2 != null)
             {
                 gameManager2.TriggerGameStart();
-                Debug.Log("触发 LX_GameManager2 开始结局剧情");
             }
             else
             {
