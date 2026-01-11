@@ -26,6 +26,7 @@ public class rqz_SceneOrchestrator : MonoBehaviour
     public string hunterSpeechContent;
     [TextArea(3, 5)]
     public string hunterLaughContent;
+    public AudioSource hunterWalkAudioSource;
 
     [Header("Hunter Clips")]
     public AudioClip speechClip;
@@ -124,7 +125,7 @@ public class rqz_SceneOrchestrator : MonoBehaviour
             globalSubtitleText.transform.parent.gameObject.SetActive(false);
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.7f);
 
 
         // --- 阶段1: 猎人站立说话 ---
@@ -137,8 +138,16 @@ public class rqz_SceneOrchestrator : MonoBehaviour
 
         // --- 阶段2: 猎人开始走路 ---
         hunterAnimator.SetTrigger("StartWalking");
+        if (hunterWalkAudioSource != null)
+        {
+            hunterWalkAudioSource.Play();
+        }
         yield return new WaitForSeconds(walkDuration);
 
+        if (hunterWalkAudioSource != null)
+        {
+            hunterWalkAudioSource.Stop();
+        }
         // --- 阶段3: 猎人停下大笑 ---
         hunterAnimator.SetTrigger("StopAndLaugh");
         hunterAudioSource.clip = laughClip;

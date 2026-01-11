@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6ce04c7d510ba0469ee0764aae1d870, type: 3}
+  m_Name: Scene7
+  m_EditorClassIdentifier: 
+  dialogueKey: Scene7
+  subtitleLines:
+  - content: 'Winter has arrived. '
+    clip: {fileID: 0}
+    overrideDuration: 0
+    postDelay: 0
+  - content: "The Ugly Duckling struggles through the snow, \nfacing the harsh cold
+      winds."
+    clip: {fileID: 0}
+    overrideDuration: 0
+    postDelay: 0
+  - content: "Though his feathers remain gray and dull, \nhis body grows stronger
+      with each step."
+    clip: {fileID: 0}
+    overrideDuration: 0
+    postDelay: 0
+  - content: His eyes show determination.
+    clip: {fileID: 0}
+    overrideDuration: 0
+    postDelay: 0
+  - content: He is no longer the weak little duckling from before.
+    clip: {fileID: 0}
+    overrideDuration: 0
+    postDelay: 0
+  - content: Press and hold to help time pass.
+    clip: {fileID: 0}
+    overrideDuration: 0
+    postDelay: 0
+  - content: Watch as winter melts away and spring arrives!
+    clip: {fileID: 0}
+    overrideDuration: 0
+    postDelay: 0
