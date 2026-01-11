@@ -1,15 +1,14 @@
 using UnityEngine;
 using Vuforia;
+using _Scripts.WY.DialogueSystem;
 
-public class ZYW_ImageTargetPlayAudio : MonoBehaviour
+public class ZYW_ImageTargetPlayDialogue : MonoBehaviour
 {
     [Header("Vuforia")]
     public ObserverBehaviour imageTargetObserver;
 
-    [Header("Audio")]
-    public AudioSource audioSource;
-    public AudioClip clip;
-    public bool loop = false;
+    [Header("Dialogue")]
+    [SerializeField] private string dialogueKey = "narrative3";
 
     [Header("Play Policy")]
     public bool playOnlyOnce = true;
@@ -19,18 +18,17 @@ public class ZYW_ImageTargetPlayAudio : MonoBehaviour
     private void Reset()
     {
         imageTargetObserver = GetComponent<ObserverBehaviour>();
-        audioSource = GetComponent<AudioSource>();
     }
 
     private void Awake()
     {
-        if (imageTargetObserver == null) imageTargetObserver = GetComponent<ObserverBehaviour>();
-        if (audioSource == null) audioSource = GetComponent<AudioSource>();
+        if (imageTargetObserver == null)
+            imageTargetObserver = GetComponent<ObserverBehaviour>();
 
         if (imageTargetObserver != null)
             imageTargetObserver.OnTargetStatusChanged += OnTargetStatusChanged;
         else
-            Debug.LogError("[ZYW_ImageTargetPlayAudio] Missing ObserverBehaviour on ImageTarget.");
+            Debug.LogError("[ZYW_ImageTargetPlayDialogue] Missing ObserverBehaviour on ImageTarget.");
     }
 
     private void OnDestroy()
@@ -47,21 +45,17 @@ public class ZYW_ImageTargetPlayAudio : MonoBehaviour
             status.Status == Status.LIMITED;
 
         if (!tracked) return;
-
         if (playOnlyOnce && hasPlayed) return;
 
-        Play();
+        PlayDialogue();
     }
 
-    private void Play()
+    private void PlayDialogue()
     {
-        if (audioSource == null || clip == null) return;
+        if (DialogueController.instance == null || string.IsNullOrEmpty(dialogueKey))
+            return;
 
         hasPlayed = true;
-
-        audioSource.Stop();
-        audioSource.clip = clip;
-        audioSource.loop = loop;
-        audioSource.Play();
+        DialogueController.instance.PlayDialogue(dialogueKey);
     }
 }

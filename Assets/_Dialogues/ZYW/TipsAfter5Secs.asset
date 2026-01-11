@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6ce04c7d510ba0469ee0764aae1d870, type: 3}
+  m_Name: TipsAfter5Secs
+  m_EditorClassIdentifier: 
+  dialogueKey: TipAfter5Secs
+  subtitleLines:
+  - content: "Try tapping the apple or the fish\u2014\r\nmaybe the food is right
+      there."
+    clip: {fileID: 8300000, guid: 7e71f6d7d19e190459f557838d8ff59b, type: 3}
+    overrideDuration: 0
+    postDelay: 0
