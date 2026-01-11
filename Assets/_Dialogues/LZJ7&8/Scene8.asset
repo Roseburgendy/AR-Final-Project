@@ -12,35 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6ce04c7d510ba0469ee0764aae1d870, type: 3}
   m_Name: Scene8
   m_EditorClassIdentifier: 
-  dialogueKey: Scene7
+  dialogueKey: Scene8
   subtitleLines:
-  - content: 'Winter has arrived. '
-    clip: {fileID: 0}
+  - content: Spring has come at last!
+    clip: {fileID: 8300000, guid: 447e0e9623ebdda418c9d7a070c5da3f, type: 3}
     overrideDuration: 0
     postDelay: 0
-  - content: "The Ugly Duckling struggles through the snow, \nfacing the harsh cold
-      winds."
-    clip: {fileID: 0}
+  - content: 'The ice and snow melt away. '
+    clip: {fileID: 8300000, guid: 6ac5635508542c645bc1b48883e8f3d7, type: 3}
     overrideDuration: 0
     postDelay: 0
-  - content: "Though his feathers remain gray and dull, \nhis body grows stronger
-      with each step."
-    clip: {fileID: 0}
+  - content: "The Ugly Duckling has grown into a strong, \nmuscular bird. "
+    clip: {fileID: 8300000, guid: 55a47fc9bc44d384cbe0b0c5fe670aeb, type: 3}
     overrideDuration: 0
     postDelay: 0
-  - content: His eyes show determination.
-    clip: {fileID: 0}
+  - content: "His feathers are still gray, \nbut his body is powerful and his eyes
+      are sharp. "
+    clip: {fileID: 8300000, guid: c29fc970d96ba5e4786d9bb64917686f, type: 3}
     overrideDuration: 0
     postDelay: 0
-  - content: He is no longer the weak little duckling from before.
-    clip: {fileID: 0}
+  - content: 'He decides to return to the farm where his journey began. '
+    clip: {fileID: 8300000, guid: 91fa97bc3a6a3974284ea91af520c29c, type: 3}
     overrideDuration: 0
     postDelay: 0
-  - content: Press and hold to help time pass.
-    clip: {fileID: 0}
-    overrideDuration: 0
-    postDelay: 0
-  - content: Watch as winter melts away and spring arrives!
-    clip: {fileID: 0}
+  - content: Look how much he has changed!
+    clip: {fileID: 8300000, guid: 8b160ed624db6d845bad8e607280f8ab, type: 3}
     overrideDuration: 0
     postDelay: 0
