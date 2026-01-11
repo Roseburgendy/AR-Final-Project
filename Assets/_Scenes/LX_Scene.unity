@@ -3970,11 +3970,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 45
+    m_Font: {fileID: 12800000, guid: 59133cc9ce69643479cc4c4a279e0eb2, type: 3}
+    m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 0
     m_MaxSize: 48
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -11385,7 +11385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointA: {fileID: 117867982}
   pointB: {fileID: 108675842}
-  moveSpeed: 0.02
+  moveSpeed: 0.015
   rotationSpeed: 0.2
   arrivalThreshold: 0.0005
   maxHealth: 5
@@ -11395,7 +11395,7 @@ MonoBehaviour:
   invincibleTime: 0.8
   dogRenderer: {fileID: 5451744141931493553}
   hitColor: {r: 1, g: 0, b: 0, a: 1}
-  hitFlashDuration: 0.3
+  hitFlashDuration: 1
   boundaryChecker: {fileID: 291148439}
 --- !u!136 &5411973645090070427
 CapsuleCollider:
