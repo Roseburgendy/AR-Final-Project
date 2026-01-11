@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6ce04c7d510ba0469ee0764aae1d870, type: 3}
-  m_Name: page1_instruction
+  m_Name: page2_instruction
   m_EditorClassIdentifier: 
-  dialogueKey: page1_instruction
+  dialogueKey: page2_instruction
   subtitleLines:
-  - content: Gently tap the eggs to help the ducklings break out of their shells.
-    clip: {fileID: 8300000, guid: 7014cc9e851d8b54c88a71b64306ad01, type: 3}
+  - content: Tap the animals to see what they say.
+    clip: {fileID: 8300000, guid: 3b1bbd346eeda0645a0e9f1d78e7c1bd, type: 3}
     overrideDuration: 0
     postDelay: 0

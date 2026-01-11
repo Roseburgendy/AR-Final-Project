@@ -4,7 +4,7 @@ public class DragDuck : MonoBehaviour
 {
     public Transform destination;
     public float reachDistance = 0.1f;
-
+    public GameObject duck;
     private bool dragging = false;
     private bool canDrag = false;
     private Page3Controller pageController;
@@ -53,6 +53,7 @@ public class DragDuck : MonoBehaviour
         enabled = false;
 
         pageController?.OnDuckArrived();
+        duck.gameObject.SetActive(false);
     }
 
     bool TryGetInput(out Vector3 pos)
