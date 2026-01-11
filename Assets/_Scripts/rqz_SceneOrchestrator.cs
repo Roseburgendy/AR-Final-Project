@@ -83,6 +83,8 @@ public class rqz_SceneOrchestrator : MonoBehaviour
             globalSubtitleText.transform.parent.gameObject.SetActive(false);
         }
 
+        yield return new WaitForSeconds(0.5f);
+
         // --- 阶段1: 猎人站立说话 ---
         globalSubtitleText.text = hunterSpeechContent;
         globalSubtitleText.transform.parent.gameObject.SetActive(true);
@@ -92,12 +94,12 @@ public class rqz_SceneOrchestrator : MonoBehaviour
         globalSubtitleText.transform.parent.gameObject.SetActive(false);
 
         // --- 阶段2: 猎人开始走路 ---
-        Debug.Log("Stage 2: Hunter starts walking.");
+       // Debug.Log("Stage 2: Hunter starts walking.");
         hunterAnimator.SetTrigger("StartWalking");
         yield return new WaitForSeconds(walkDuration);
 
         // --- 阶段3: 猎人停下大笑 ---
-        Debug.Log("Stage 3: Hunter laughs...");
+      //  Debug.Log("Stage 3: Hunter laughs...");
         hunterAnimator.SetTrigger("StopAndLaugh");
         hunterAudioSource.clip = laughClip;
         hunterAudioSource.Play();
@@ -105,11 +107,11 @@ public class rqz_SceneOrchestrator : MonoBehaviour
         globalSubtitleText.transform.parent.gameObject.SetActive(true);
 
         // 等待完整的大笑音频播放完毕
-        Debug.Log("...waiting for the entire laugh to finish...");
+       // Debug.Log("...waiting for the entire laugh to finish...");
         yield return new WaitForSeconds(laughClip.length);
 
         // --- 阶段4: 动物反应 ---
-        Debug.Log("Laugh finished! NOW animals flee!");
+      //  Debug.Log("Laugh finished! NOW animals flee!");
 
         // 播放动物的声音和字幕
         if (animalAudioSource != null && animalClip != null)
@@ -143,10 +145,10 @@ public class rqz_SceneOrchestrator : MonoBehaviour
         }
 
         // --- 阶段5: 猎人回归站立 ---
-        Debug.Log("Stage 5: Hunter returns to idle.");
+      //  Debug.Log("Stage 5: Hunter returns to idle.");
         hunterAnimator.SetTrigger("ReturnToIdle");
 
-        Debug.Log("Hunter sequence complete.");
+     //   Debug.Log("Hunter sequence complete.");
     }
 
 
