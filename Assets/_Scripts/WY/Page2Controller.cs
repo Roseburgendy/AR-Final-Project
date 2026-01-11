@@ -4,8 +4,9 @@ using UnityEngine;
 public class Page2Controller : MonoBehaviour
 {
     [Header("Dialogue Keys")]
-    public string introKey = "page2_intro";
-    public string sadKey = "page2_sad";
+    public string introKey = "page2_opening";
+    public string instructionKey = "page2_instruction";
+    public string sadKey = "page2_ending";
 
     [Header("Bubble Targets")]
     public BubbleTap[] bubbles;
@@ -13,12 +14,25 @@ public class Page2Controller : MonoBehaviour
     private int revealedCount = 0;
     private bool interactionEnabled = false;
 
-    void Start()
-    {
-        DialogueController.instance.PlayDialogue(introKey);
-        Invoke(nameof(EnableBubbles), 5f);
-    }
 
+    private bool started = false;
+    public void OnPageActivated()
+    {
+        if (started) return;
+        started = true;
+        
+        DialogueController.instance.PlayDialogue(introKey);
+        
+        float dur = DialogueController.instance.GetDialogueDuration(introKey);
+        Invoke(nameof(PlayInstruction), dur+1f);
+    }
+    void PlayInstruction()
+    {
+        DialogueController.instance.PlayDialogue(instructionKey);
+        
+        float dur = DialogueController.instance.GetDialogueDuration(instructionKey);
+        Invoke(nameof(EnableBubbles), dur);
+    }
     void EnableBubbles()
     {
         interactionEnabled = true;

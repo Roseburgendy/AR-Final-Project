@@ -16,15 +16,15 @@ MonoBehaviour:
   subtitleLines:
   - content: "One by one, the ducklings begin to hatch.Then, the largest egg starts
       to crack\u2026"
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: f7f5f31c76576d5468dc6cc42cf9afcf, type: 3}
     overrideDuration: 0
     postDelay: 0
   - content: Out comes a duckling with gray feathers. He is bigger than his brothers
       and sisters.
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 7f6f580ee72178f49bb0d516b73cd6fe, type: 3}
     overrideDuration: 0
     postDelay: 0
   - content: Mother Duck tilts her head, looking at him with wonder.
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: a140f0e55d0aed9429bc2c390dcc1934, type: 3}
     overrideDuration: 0
     postDelay: 0

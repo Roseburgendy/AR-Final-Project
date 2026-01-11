@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6ce04c7d510ba0469ee0764aae1d870, type: 3}
+  m_Name: page2_ending
+  m_EditorClassIdentifier: 
+  dialogueKey: page2_ending
+  subtitleLines:
+  - content: The little gray duck stands alone.
+    clip: {fileID: 8300000, guid: 983b49a1ca913f143b72cee4530cce0f, type: 3}
+    overrideDuration: 0
+    postDelay: 0
+  - content: He watches the others play and laugh.
+    clip: {fileID: 8300000, guid: 683dbb1fcb6495841bad280acff561d1, type: 3}
+    overrideDuration: 0
+    postDelay: 0
+  - content: A tear falls into the pond, making gentle ripples.
+    clip: {fileID: 8300000, guid: 758bdda7957ae6b40a9a676a969a8653, type: 3}
+    overrideDuration: 0
+    postDelay: 0

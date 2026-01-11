@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6ce04c7d510ba0469ee0764aae1d870, type: 3}
-  m_Name: page1_opening
+  m_Name: page3_ending
   m_EditorClassIdentifier: 
-  dialogueKey: page1_opening
+  dialogueKey: page3_ending
   subtitleLines:
-  - content: By the pond in springtime, Mother Duck watches over her nest of eggs.
-    clip: {fileID: 8300000, guid: f82cdbff3fd45154fb5fec2b2f83f7da, type: 3}
+  - content: The little gray duck walks into the forest.
+    clip: {fileID: 8300000, guid: 593e0fa459753b64797d7e204f706f7e, type: 3}
     overrideDuration: 0
     postDelay: 0
-  - content: 'One of the eggs is larger than the others.
-
-      Its shell is gray
-      and a little different.'
-    clip: {fileID: 8300000, guid: 54b899ab10b8c3d489501ccaab490def, type: 3}
+  - content: The road ahead is quiet and unknown.
+    clip: {fileID: 8300000, guid: fc9f7c5796095d04ba0a5354acf684e8, type: 3}
+    overrideDuration: 0
+    postDelay: 0
+  - content: But a new journey has begun.
+    clip: {fileID: 8300000, guid: 153638dce8ac30b4b9f5ef90546f598c, type: 3}
     overrideDuration: 0
     postDelay: 0

@@ -13,22 +13,27 @@ public class Page1Controller : MonoBehaviour
 
     private int crackedCount = 0;
     private bool interactionActive = false;
-
-    void Start()
+    private bool started = false;
+    public void OnPageActivated()
     {
+        if (started) return;
+        started = true;
+
         PlayOpening();
     }
-
     void PlayOpening()
     {
         DialogueController.instance.PlayDialogue(openingKey);
-        Invoke(nameof(PlayInstruction), 6f);
+        float dur = DialogueController.instance.GetDialogueDuration(openingKey);
+        Invoke(nameof(PlayInstruction), dur+1f);
     }
 
     void PlayInstruction()
     {
         DialogueController.instance.PlayDialogue(instructionKey);
-        Invoke(nameof(EnableInteraction), 3f);
+
+        float dur = DialogueController.instance.GetDialogueDuration(instructionKey);
+        Invoke(nameof(EnableInteraction), dur);
     }
 
     void EnableInteraction()

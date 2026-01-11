@@ -145,8 +145,6 @@ namespace _Scripts.WY.DialogueSystem
             if (subtitlePanel != null) subtitlePanel.alpha = 0f;
         }
 
-
-
         private IEnumerator ShowMultilineSubtitles(List<SubtitleLine> lines)
         {
             if (lines == null || lines.Count == 0) yield break;
@@ -223,7 +221,29 @@ namespace _Scripts.WY.DialogueSystem
         {
             return _currentData;
         }
-        
+        public float GetDialogueDuration(string dialogueKey)
+        {
+            if (!_dialogueCache.TryGetValue(dialogueKey, out var data) || data == null)
+                return 0f;
+
+            float total = 0f;
+            foreach (var line in data.subtitleLines)
+            {
+                if (line == null) continue;
+
+                if (line.overrideDuration > 0f)
+                    total += line.overrideDuration;
+                else if (line.clip != null)
+                    total += line.clip.length;
+                else
+                    total += EstimateByText(line.content);
+
+                total += Mathf.Max(0f, line.postDelay);
+            }
+
+            return total;
+        }
+
         
     }
 }

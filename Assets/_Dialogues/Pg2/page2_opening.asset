@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6ce04c7d510ba0469ee0764aae1d870, type: 3}
+  m_Name: page2_opening
+  m_EditorClassIdentifier: 
+  dialogueKey: page2_opening
+  subtitleLines:
+  - content: On the farm, the ducklings line up by the water.
+    clip: {fileID: 8300000, guid: 626eb17530f1b964a8d3a13d71759408, type: 3}
+    overrideDuration: 0
+    postDelay: 0
+  - content: They practice swimming together, side by side.
+    clip: {fileID: 8300000, guid: c9bad0b4345e4944d9c3fd69d516a078, type: 3}
+    overrideDuration: 0
+    postDelay: 0
+  - content: But the little gray duck is left behind.
+    clip: {fileID: 8300000, guid: d666d76286eb6c541999a2128baa6da2, type: 3}
+    overrideDuration: 0
+    postDelay: 0
