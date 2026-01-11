@@ -1,6 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ZYW_ImageTargetTapSwap : MonoBehaviour
 {
@@ -8,7 +10,7 @@ public class ZYW_ImageTargetTapSwap : MonoBehaviour
     public Camera rayCamera;
 
     [Header("Click Root (Object with Collider)")]
-    public Transform hitRoot; // Collider ���ĸ������Ͼ����ĸ���Plane3.2.1��3.2.2��
+    public Transform hitRoot; // Collider 在哪个物体上就拖哪个（Plane3.2.1或3.2.2）
 
     [Header("Renderer A (start visible)")]
     public Renderer planeA;   // Plane3.2.1
@@ -33,6 +35,13 @@ public class ZYW_ImageTargetTapSwap : MonoBehaviour
     public AudioClip tapSfx;
     public bool playTapSfx = true;
 
+    [Header("UI Tap Hint (tap image to hide)")]
+    public Canvas tapHintCanvas;              // 你的 TapHintCanvas
+    public Graphic tapHintGraphic;            // 你的 TapHintImage(Image组件)
+    public bool hideHintOnTap = true;         // 点击提示图就隐藏
+    public bool consumeTapWhenHiding = true;  // 隐藏提示时是否阻止本次点击继续触发3D
+    public bool hideHintWhenHitPlane = true;  // ✅ 新增：点到Plane也隐藏提示
+
     private bool hasSwapped = false;
     private bool isFading = false;
     private int texId;
@@ -46,17 +55,17 @@ public class ZYW_ImageTargetTapSwap : MonoBehaviour
             return;
         }
 
-        // SFX ��ǿ�ƣ��������Զ���һ��
+        // SFX 不强制，但尽量自动拿一个
         if (sfxSource == null) sfxSource = GetComponent<AudioSource>();
 
         texId = Shader.PropertyToID("_MainTex");
         if (planeA.sharedMaterial != null && planeA.sharedMaterial.HasProperty("_BaseMap"))
             texId = Shader.PropertyToID("_BaseMap");
 
-        // ���⹲��
+        // 避免共面
         planeB.transform.localPosition = planeA.transform.localPosition + planeBLocalOffset;
 
-        // ===== ��ʼ״̬��ֻ��ʾA��B��ȫ���� =====
+        // ===== 初始状态：只显示A，B完全隐藏 =====
         ApplyTexture(planeA, textureA);
         SetAlpha(planeA, 1f);
         planeA.enabled = true;
@@ -64,8 +73,12 @@ public class ZYW_ImageTargetTapSwap : MonoBehaviour
         ApplyTexture(planeB, textureB);
         SetAlpha(planeB, 0f);
 
-        // �ؼ���ֱ�ӹص� B �� Renderer����֤��������ǰ��ʾ
+        // 关键：直接关掉 B 的 Renderer，保证绝不会提前显示
         planeB.enabled = false;
+
+        // UI 提示自动兜底：如果你没拖 tapHintGraphic，但拖了 Canvas，就尝试自动抓一个 Graphic
+        if (tapHintGraphic == null && tapHintCanvas != null)
+            tapHintGraphic = tapHintCanvas.GetComponentInChildren<Graphic>(true);
     }
 
     private void Update()
@@ -74,6 +87,21 @@ public class ZYW_ImageTargetTapSwap : MonoBehaviour
 
         if (!PointerPressedThisFrame(out Vector2 screenPos)) return;
 
+        // ① 优先处理 UI 提示图：点到就隐藏
+        if (hideHintOnTap && tapHintGraphic != null && tapHintGraphic.gameObject.activeInHierarchy)
+        {
+            if (IsPointerOverGraphic(tapHintGraphic, screenPos))
+            {
+                PlayTapSfx();
+
+                // 隐藏提示（优先隐藏整个 Canvas，避免残留子物体挡点击）
+                HideTapHint();
+
+                if (consumeTapWhenHiding) return;
+            }
+        }
+
+        // ② 再走 3D Raycast 点击逻辑
         Ray ray = rayCamera.ScreenPointToRay(screenPos);
         if (!Physics.Raycast(ray, out RaycastHit hit)) return;
         if (hit.collider == null) return;
@@ -83,8 +111,10 @@ public class ZYW_ImageTargetTapSwap : MonoBehaviour
         {
             Debug.Log("HIT: " + hit.collider.name);
 
-            if (playTapSfx && sfxSource != null && tapSfx != null)
-                sfxSource.PlayOneShot(tapSfx);
+            // ✅ 点到Plane也隐藏提示
+            if (hideHintWhenHitPlane) HideTapHint();
+
+            PlayTapSfx();
 
             StartCoroutine(FadeAToBOnce());
         }
@@ -113,14 +143,37 @@ public class ZYW_ImageTargetTapSwap : MonoBehaviour
         return false;
     }
 
+    private bool IsPointerOverGraphic(Graphic g, Vector2 screenPos)
+    {
+        if (g == null) return false;
+
+        // Overlay 模式传 null camera 即可；Screen Space - Camera 也能正常工作
+        RectTransform rt = g.rectTransform;
+        return RectTransformUtility.RectangleContainsScreenPoint(rt, screenPos, null);
+    }
+
+    private void PlayTapSfx()
+    {
+        if (playTapSfx && sfxSource != null && tapSfx != null)
+            sfxSource.PlayOneShot(tapSfx);
+    }
+
+    private void HideTapHint()
+    {
+        if (tapHintCanvas != null && tapHintCanvas.gameObject.activeSelf)
+            tapHintCanvas.gameObject.SetActive(false);
+        else if (tapHintGraphic != null && tapHintGraphic.gameObject.activeSelf)
+            tapHintGraphic.gameObject.SetActive(false);
+    }
+
     private IEnumerator FadeAToBOnce()
     {
         isFading = true;
 
-        // ��ʼ����ǰ����B��Renderer
+        // 开始渐变前，打开B的Renderer
         planeB.enabled = true;
 
-        // ��ȷ��һ�γ�ʼalpha
+        // 再确认一次初始alpha
         SetAlpha(planeA, 1f);
         SetAlpha(planeB, 0f);
 
